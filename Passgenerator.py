@@ -3,7 +3,7 @@ import random
 from caracteres import *
 
 #Loop que deleta os tipos passados ex: 1 = especiais
-#ele removerá o
+#ele removerá os caracteres especiais
 def loopDeletarTipoDeString(tipoDeString,numerosAdeletar):
   for i in numerosAdeletar:
     tipoDeString.remove(i)
