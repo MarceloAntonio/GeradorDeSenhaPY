@@ -1,13 +1,15 @@
 import argparse
 import random
+from caracteres import *
 
+#Loop que deleta os tipos passados ex: 1 = especiais
+#ele removerá o
 def loopDeletarTipoDeString(tipoDeString,numerosAdeletar):
   for i in numerosAdeletar:
     tipoDeString.remove(i)
 
-
-def main():
-
+#Define os paramentros do sistema
+def parametros():
   parser = argparse.ArgumentParser(prog="Gerador de senha")
 
   parser.add_argument("-q", "--quantidade", help="Quantidade de caracteres pra senha")
@@ -16,23 +18,11 @@ def main():
   parser.add_argument("-e", "--especiais",action='store_true', help="Senha terá apenas especiais")
   parser.add_argument("-z", "--zeroespeciais",action='store_true', help="Senha não terá especiais")
 
-  
   arg = parser.parse_args()
+  return arg
 
-  especiais = [ '.', '+', '-', '@', '#', '*', '!', '?', '~']
-  numeros = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-  letras_min = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-  letras_mai = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-
-  selected = sum([arg.numeros,arg.letras,arg.especiais,arg.zeroespeciais])
-  if selected > 1:
-      print("Só pode escolher um")
-      return
-
-  tipoDeString = [1,2,3,4]
-  senha = []
-
-  #te amo nami - te amo celo atenciosamente nami :3 <3
+#Dependendo de qual paramentro o usuario passou ele exclui os caracteres 
+def escolhas(arg, tipoDeString):
   if arg.numeros:
     numerosAdeletar = [1,3,4]
     loopDeletarTipoDeString(tipoDeString,numerosAdeletar)
@@ -46,8 +36,24 @@ def main():
     numerosAdeletar = [1]
     loopDeletarTipoDeString(tipoDeString,numerosAdeletar)
 
+#Junta a lista senha e printa
+def JuntaSenha(senha):
+  senhaJuntada = "".join(senha)
+  print(senhaJuntada)
 
 
+
+#Checa se mais de um parametro foi passado
+def CheckParametros(arg):
+  selected = sum([arg.numeros,arg.letras,arg.especiais,arg.zeroespeciais])
+  
+  if selected > 1:
+      print("Só pode escolher um")
+      return
+
+
+#Gera a senha
+def GenSenha(arg,senha,tipoDeString):
   if arg.quantidade:
     while len(senha) < int(arg.quantidade):
       
@@ -61,10 +67,24 @@ def main():
       elif escolha == 4:
         senha.append(random.choice(letras_mai))
 
-    
 
-  senhaJuntada = "".join(senha)
-  print(senhaJuntada)
+#Função Main
+def main():
+  
+  arg = parametros()
+  tipoDeString = [1,2,3,4]
+  senha = []
+  
+  CheckParametros(arg)
+  
+  escolhas(arg, tipoDeString)
+
+  GenSenha(arg,senha,tipoDeString)
+
+  JuntaSenha(senha)
+
+
   
 main()
   
+  # te amo celo atenciosamente nami :3 <3
